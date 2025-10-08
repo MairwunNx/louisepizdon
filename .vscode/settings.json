@@ -1,0 +1,12 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.detectIndentation": true,
+  "files.eol": "\n",
+  "[csharp]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  }
+}
