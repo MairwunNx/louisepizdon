@@ -1,0 +1,62 @@
+---
+alwaysApply: true
+---
+
+# Louisepizdon - Project Overview 🥀
+
+## Project Information
+- **Full Name**: Louisepizdon  
+- **Short Name**: louisepizdon  
+- **Description**: AI-powered Telegram bot that evaluates photos and provides funny, detailed pricing breakdowns of items/clothing in the image with witty commentary.  
+
+## Technical Specifications
+- **.NET Version**: 9.0+  
+- **Main Project**: Louisepizdon.csproj  
+- **Architecture**: Console application with modular design  
+
+## Technology Stack
+- **Language**: C# 13 (.NET 9.0)  
+- **Telegram API**: Telegram.Bot (latest stable)  
+- **AI Framework**: Microsoft.Agents.AI (preview)  
+- **Caching**: StackExchange.Redis  
+- **Cache**: Redis  
+- **Containerization**: Docker, docker-compose  
+
+## AI Integration
+- **Microsoft.Agents.AI** – AI Agent Framework for LLM integration  
+- **Vision Models** – Multi-modal image analysis  
+- **OpenAI/OpenRouter** – GPT models with vision capabilities  
+
+## Core Modules (Planned)
+- **AI**: Vision analysis and witty response generation  
+- **Telegram**: Bot API logic and message handling  
+- **Caching**: Redis integration for session/rate limiting  
+- **Configuration**: Environment-based configuration  
+- **Logging**: Structured logging with Microsoft.Extensions.Logging  
+
+## Key Entry Points
+- **Main File**: [Program.cs](mdc:Louisepizdon/Program.cs)  
+
+## Architectural Principles
+- **Pattern**: Feature-oriented modular architecture  
+- **DI**: Built-in .NET Dependency Injection  
+- **Logging**: Structured logging with Microsoft.Extensions.Logging  
+- **Configuration**: IOptions pattern with environment variables  
+- **Error Handling**: Graceful error handling with logging  
+
+## Bot Functionality
+1. User sends a photo to the bot
+2. Bot analyzes the image using AI vision
+3. Bot generates a funny, itemized price breakdown with witty commentary
+4. Response is sent back to the user in Telegram
+
+### Example Output
+```
+Очки Ray-Ban Wayfarer "морской бриз" — 14 000 ₽
+Футболка Adidas Performance black-on-black — 3 499 ₽
+Лёгкая щетина "week-end в Сан-Тропе" — 0 ₽ (дарит брутальность)
+Прическа «ветер с бухты» от Barber Kings — 2 500 ₽
+Яхта Sunseeker Manhattan 66, скромно маячащая за плечом — 250 000 000 ₽
+Пальмы Balenciaga Home Collection (естественные, но хайповые) — бесценны
+Уверенный прищур уровня "buy the dip, sail the sip" — бесценно
+```
