@@ -1,176 +1,149 @@
 # 🥀 Louisepizdon
 
-[![AI Capable](https://img.shields.io/badge/AI-Capable-brightgreen?style=flat&logo=openai&logoColor=white)](https://github.com/mairwunnx/louisepizdon)
-[![Docker](https://img.shields.io/badge/Docker-Available-2496ED?style=flat&logo=docker&logoColor=white)](https://github.com/MairwunNx/louisepizdon/pkgs/container/louisepizdon)
-[![GitHub Release](https://img.shields.io/github/v/release/mairwunnx/louisepizdon?style=flat&logo=github&color=blue)](https://github.com/mairwunnx/louisepizdon/releases)
-[![.NET Version](https://img.shields.io/badge/.NET-9.0+-512BD4?style=flat&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+AI-powered Telegram bot that evaluates photos and provides funny, detailed pricing breakdowns of items/clothing in images with witty commentary.
 
-**Louisepizdon** — 🥀 Telegram-бот с ИИ, который честнее чем твоя бабушка. Оценит тебя по достоинству, разборка ценообразования твоих шмоток с фотографии!
+## 🚀 Features
 
-> **Внимание**: Это развлекательный проект, созданный для юмора и развлечения. Все оценки генерируются ИИ и носят шуточный характер.
+- 📸 **Image Analysis**: AI-powered photo evaluation using GPT-4 Vision
+- 💰 **Price Breakdown**: Detailed itemized pricing with witty commentary
+- 🔒 **User Agreement**: Terms acceptance flow for new users
+- 📊 **Usage Limits**: Daily and monthly limits per user
+- 🗄️ **SQLite Database**: User management and usage tracking
+- 🔴 **Redis Caching**: High-performance limit tracking
+- 🌐 **Proxy Support**: HTTP/SOCKS5 proxy for Telegram API
+- 📝 **Structured Logging**: Comprehensive logging with Serilog
 
-## Фичи
+## 🛠️ Tech Stack
 
-### Основной функционал
+- **.NET 9.0** - Modern C# runtime
+- **Telegram.Bot** - Telegram Bot API client
+- **Microsoft.Agents.AI** - AI Agent Framework with OpenAI
+- **Entity Framework Core** - SQLite database with migrations
+- **StackExchange.Redis** - Redis caching
+- **Serilog** - Structured logging
+- **DotNetEnv** - Environment configuration
 
-- **Анализ изображений с AI** — отправьте фото, получите подробный разбор ценообразования с юмором.
-- **Vision AI** — мультимодальный анализ с использованием Microsoft.Agents.AI.
-- **Остроумные комментарии** — бот не просто оценивает, но и добавляет забавные комментарии.
-- **Быстрая обработка** — результат за секунды.
+## 📦 Setup
 
-## Использование
+### Prerequisites
 
-### Начало работы
-1. Найдите бота в Telegram: `@louisepizdon_bot`
-2. Начните диалог командой `/start`
-3. Отправьте фотографию
-4. Получите забавный разбор ценообразования!
+- .NET 9.0 SDK
+- Redis server
+- Telegram Bot Token (from [@BotFather](https://t.me/botfather))
+- OpenAI API Key
 
-## Деплоймент
+### Installation
 
-### Dev Containers (рекомендуется для разработки)
-
-Самый простой способ запуска для разработки — использование Dev Containers в VS Code или аналогичных IDE:
-
-1. Клонируйте репозиторий:
+1. Clone the repository:
 ```bash
-git clone https://github.com/mairwunnx/louisepizdon
-cd louisepizdon
+git clone <repository-url>
+cd Louisepizdon
 ```
 
-2. Настройте обязательные переменные окружения (в файле `.env.dev`):
+2. Copy and configure `.env`:
 ```bash
-TELEGRAM_BOT_TOKEN="ваш_telegram_bot_token"
-OPENROUTER_API_KEY="ваш_openrouter_api_key"
-
-REDIS_HOST="louisepizdon-redis"
-REDIS_PORT="6379"
-REDIS_PASSWORD="ваш_redis_пароль"
+cp .env.example .env
 ```
 
-3. Откройте проект в VS Code и выберите "Reopen in Container"
+3. Update `APPLICATION_CONFIG` in `.env` with your credentials:
+```json
+{
+  "telegram": {
+    "botToken": "YOUR_BOT_TOKEN"
+  },
+  "redis": {
+    "connectionString": "localhost:6379"
+  },
+  "database": {
+    "connectionString": "Data Source=louisepizdon.db"
+  },
+  "artificial": {
+    "openAIToken": "YOUR_OPENAI_API_KEY",
+    "chatModel": "gpt-4o",
+    "visionPromptBase64": "BASE64_ENCODED_PROMPT"
+  },
+  "limits": {
+    "dailyLimit": 5,
+    "monthlyLimit": 30
+  },
+  "proxy": null
+}
+```
 
-Всё остальное (Redis, зависимости) настроится автоматически. Просто и быстро!
-
-### Docker Compose (для продакшена)
-
-1. Клонируйте репозиторий:
+4. Restore packages:
 ```bash
-git clone https://github.com/mairwunnx/louisepizdon
-cd louisepizdon
+dotnet restore
 ```
 
-2. Настройте обязательные переменные окружения (в файле `.env`):
+5. Run the bot:
 ```bash
-TELEGRAM_BOT_TOKEN="ваш_telegram_bot_token"
-OPENROUTER_API_KEY="ваш_openrouter_api_key"
-
-REDIS_HOST="louisepizdon-redis"
-REDIS_PORT="6379"
-REDIS_PASSWORD="ваш_redis_пароль"
+dotnet run
 ```
 
-3. Запустите сервисы:
-```bash
-docker compose up -d
-```
+## 🐳 Docker
 
-4. Проверьте статус:
-```bash
-docker compose logs -f louisepizdon
-```
-
-### Docker Compose с готовым образом
-
-Если хотите использовать готовый образ и управлять Redis самостоятельно:
-
-1. Задекларируйте сервис louisepizdon в `docker-compose.yml`:
-
-```yaml
-services:
-  louisepizdon:
-    image: ghcr.io/mairwunnx/louisepizdon:0.1.0
-    env_file: .env
-    environment:
-      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
-      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
-      REDIS_HOST: ${REDIS_HOST}
-      REDIS_PORT: ${REDIS_PORT}
-      REDIS_PASSWORD: ${REDIS_PASSWORD}
-    restart: unless-stopped
-```
-
-> **Примечание**: Вам потребуется передать все переменные окружения из файла `.env` или любым другим удобным способом.
-
-2. Задекларируйте Redis в `docker-compose.yml`. 
-> Важно, версия **Redis** должна быть `8.0+`.
-
-3. Запустите сервисы:
-```bash
-docker compose up -d
-```
-
-### Сборка из исходников
-
-#### Ручной и прямой способ сборки
-
-Требования:
-- .NET SDK 9.0+
+Build and run with Docker Compose:
 
 ```bash
-dotnet build -c Release
-dotnet run -c Release --project Louisepizdon
+docker-compose up -d
 ```
 
-#### Сборка с помощью Docker
+## 📖 Usage
 
-Требования:
-- Docker
+1. Start the bot: `/start`
+2. Accept terms and conditions
+3. Send a photo
+4. Receive detailed price breakdown with witty commentary
 
-```bash
-docker build -t louisepizdon .
+## 🏗️ Project Structure
+
+```
+Louisepizdon/
+├── Platform/         # Configuration and utilities
+├── Persistence/      # Database entities and repositories
+├── Caching/          # Redis client
+├── Throttler/        # Usage limits
+├── Artificial/       # AI Agent integration
+├── Telegram/         # Telegram bot logic
+├── Texting/          # Message constants
+├── Tracing/          # Logging
+└── Program.cs        # Application entry point
 ```
 
-## Стек
+## 🔧 Configuration
 
-- **.NET 9.0** — основной фреймворк разработки
-- **C# 13** — современный язык программирования
-- **Telegram.Bot** — интеграция с Telegram Bot API
-- **Microsoft.Agents.AI** — AI Agent Framework для работы с LLM
-- **Redis + StackExchange.Redis** — кэширование и rate limiting
-- **Microsoft.Extensions.Logging** — structured logging
-- **Docker + Docker Compose** — контейнеризация и оркестрация
+Configuration is provided via `APPLICATION_CONFIG` environment variable as JSON:
 
-## Участие AI
+- `telegram.botToken` - Telegram bot token
+- `redis.connectionString` - Redis connection string
+- `database.connectionString` - SQLite connection string
+- `artificial.openAIToken` - OpenAI API key
+- `artificial.chatModel` - OpenAI model (e.g., gpt-4o)
+- `artificial.visionPromptBase64` - Base64-encoded system prompt
+- `limits.dailyLimit` - Daily usage limit per user
+- `limits.monthlyLimit` - Monthly usage limit per user
+- `proxy` - Optional SOCKS5 proxy configuration
 
-AI использовался для генерации промптов для анализа изображений, оптимизации архитектуры и создания документации.
+## 📊 Database Schema
 
-## Ссылки на связанные проекты
+### Users Table
+- `id` - Auto-increment primary key
+- `telegram_user_id` - Telegram user ID
+- `telegram_user_name` - User full name
+- `telegram_user_nickname` - User nickname
+- `is_accepted` - Terms acceptance status
+- `is_active` - Ban status (true = not banned)
+- `created_at` - Creation timestamp
 
-[Xi Manager](https://github.com/mairwunnx/xi) — 🀄️ Telegram-бот с ИИ, стилизованный под личного помощника Xi. Личный помощник великого лидера, готовый отвечать на вопросы простого народа.
+### Usage Table
+- `id` - Auto-increment primary key
+- `user_id` - Foreign key to users table
+- `created_at` - Usage timestamp
 
-[Dickobrazz](https://github.com/mairwunnx/dickobrazz) — 🌶️ Дикобраз бот, он же дикобот, способен в точности до сантиметра выдать размер вашего агрегата. Современный и технологичный кокомер с системой сезонов и геймификацией.
+## 📝 License
 
-## Из серии "от того же автора"
+This project is licensed under the MIT License.
 
-[Mo'Bosses](https://github.com/mairwunnx/mobosses) — 🏆 **Mo'Bosses** — это лучший RPG плагин, который превращает обычных мобов в эпических боссов с **продвинутой системой прогрессии игрока**. В отличие от других плагинов, здесь каждый бой имеет значение, а каждый уровень открывает новые возможности! ⚔
+## 👨‍💻 Author
 
-[Mo'Joins](https://github.com/mairwunnx/mojoins) — 🎉 Кастомные входы/выходы: сообщения, звуки, частицы, фейерверки и защита после входа. Все для PaperMC.
-
-[Mo'Afks](https://github.com/mairwunnx/moafks) — 🛡️ Пауза в онлайне — теперь возможна. Плагин для PaperMC, который даёт игроку безопасный режим AFK: иммунитет к урону, отсутствие коллизий, игнор мобами, авто-детект неактивности и аккуратные визуальные эффекты.
-
-[McBuddy Server](https://github.com/mcbuddy-ai/mcbuddy-server) — 🛠️⚡ Бэкенд для AI-ассистента MCBuddy с интеграцией OpenRouter и обработкой запросов
-
-[McBuddy Telegram](https://github.com/mcbuddy-ai/mcbuddy-bot) — 🤖📱 Telegram-бот для общения с MCBuddy за пределами игры
-
-[McBuddy Spigot](https://github.com/mcbuddy-ai/mcbuddy-spigot) — 💬 Spigot-плагин для интеграции MCBuddy — добавляет команду `/ask` для вопросов к AI-ассистенту прямо в чате Minecraft сервера! 🎮
-
----
-
-![image](./media.png)
-
-🇷🇺 **Сделано в России с любовью.** ❤️
-
-**Louisepizdon** — это про юмор, AI и современные технологии. Оценим всё и всех!
-
-> 🫡 Made by Pavel Erokhin (Павел Ерохин), aka mairwunnx.
+Created with ❤️ by [@MairwunNx](https://t.me/MairwunNx)

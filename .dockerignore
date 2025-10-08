@@ -1,66 +1,18 @@
-# Git
-.git
-.gitignore
-.gitattributes
-
-# CI/CD
-.github/
-.vscode/
-.devcontainer/
-
-# Docker
-docker-compose*.yaml
-Dockerfile*
-.dockerignore
-
-# Documentation
-README*.md
-LICENSE
-*.md
-
-# Build outputs
-**/bin/
-**/obj/
-**/out/
-
-# NuGet
-.nuget/
-*.nupkg
-*.snupkg
-
-# Environment
+**/.git
+**/.gitignore
+**/.vscode
+**/.vs
+**/bin
+**/obj
+**/*.db
+**/*.db-shm
+**/*.db-wal
+**/logs
 .env
-.env.*
-
-# IDE
-.vs/
-.vscode/
-.idea/
-*.suo
-*.user
-*.swp
-*~
-
-# Logs
-logs/
-*.log
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Test results
-**/TestResults/
-**/*.trx
-
-# Coverage
-coverage/
-*.coverage
-*.coveragexml
-
-# Temporary files
-**/tmp/
-**/temp/
-
-# Old project reference
-ximanager/
+.env.local
+README.md
+docker-compose*.yaml
+Dockerfile
+xi-example/
+test.txt
+media.png
