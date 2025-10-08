@@ -1,0 +1,75 @@
+---
+globs: *.md,*.MD
+---
+
+# Markdown Files (.md) Rules
+
+## Language & Style
+- Use **relaxed Russian** as primary language
+- Write clear, concise documentation
+- Focus on practical information and examples
+
+## Formatting Guidelines
+
+### Text Emphasis
+- Use **bold** for important concepts and emphasis
+- Use *italics for clarifications in parentheses*
+- Use `backticks` for:
+  - File names and paths
+  - Code-related terms
+  - Fixed naming conventions
+  - API endpoints
+  - Configuration values
+
+### Structure
+- Use headings (`#`, `##`, `###`) for semantic organization
+- Use horizontal separators (`---`) to divide major sections
+- Create logical information hierarchy
+
+### Code Blocks
+- Use fenced code blocks with language specification:
+```kotlin
+// Example Kotlin code
+class PaymentGateway {
+  fun processPayment() = TODO()
+}
+```
+
+### Visual Enhancement
+- Use emojis to reduce cognitive load and improve readability
+- Employ consistent bullet points and numbering
+- Include tables for structured data comparison
+
+## Content Organization
+
+### Headers Structure
+```markdown
+# Main Title <emoji>
+Brief introduction paragraph.
+
+## Section Title <emoji>
+Content with practical examples.
+
+### Subsection <emoji>
+Detailed implementation notes.
+```
+
+### Lists & Examples
+- Use bullet points for feature lists
+- Number steps in procedures
+- Include code examples for technical concepts
+- Reference related files using `[filename.ext](mdc:path/to/file)`
+
+### Documentation Patterns
+- Start with overview and purpose
+- Include prerequisites and requirements
+- Provide step-by-step instructions
+- Add troubleshooting sections when relevant
+- Include links to related documentation
+
+## Best Practices
+- Keep paragraphs short and focused
+- Use active voice over passive voice
+- Include practical examples and use cases
+- Cross-reference related files and concepts
+- Update documentation alongside code changes
