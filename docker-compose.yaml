@@ -1,0 +1,68 @@
+---
+networks:
+  default:
+    driver: bridge
+services:
+  louisepizdon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["dotnet", "Louisepizdon.dll"]
+    container_name: louisepizdon
+    cpus: '0.2'
+    depends_on:
+      louisepizdon-redis:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_PORT: ${REDIS_PORT}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      TZ: ${TZ}
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 10m
+    mem_limit: 512m
+    mem_reservation: 256m
+    networks: [ default ]
+    restart: unless-stopped
+  louisepizdon-redis:
+    command: >
+      redis-server --port 6379
+      --loglevel warning
+      --save 20 1
+      --requirepass ${REDIS_PASSWORD}
+    container_name: louisepizdon-redis
+    cpus: '0.5'
+    env_file: [ .env ]
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      TZ: ${TZ}
+    healthcheck:
+      interval: 10s
+      retries: 3
+      start_period: 10s
+      test: ["CMD", "sh", "-c", "redis-cli -a ${REDIS_PASSWORD} --no-auth-warning ping"]
+      timeout: 5s
+    image: redis:8.2-alpine
+    logging:
+      driver: local
+      options:
+        max-file: '3'
+        max-size: 10m
+    mem_limit: 256m
+    mem_reservation: 128m
+    networks: [ default ]
+    ports: [ "6379:6379" ]
+    restart: unless-stopped
+    user: '0'
+    volumes:
+      - louisepizdon-redis-data:/data
+volumes:
+  louisepizdon-redis-data:
+    driver: local
