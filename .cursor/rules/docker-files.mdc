@@ -1,0 +1,46 @@
+---
+globs: Dockerfile,**/Dockerfile
+---
+
+# Dockerfile Rules
+
+## Core Principles
+- Build for security, reproducibility, and minimal size.
+- Keep layers small, clear, and ordered for optimal caching.
+- Prefer readability and maintainability over clever hacks.
+
+## Base Image
+- Use official or trusted base images only.
+- Pin to exact versions or digests; never use "latest".
+- Choose slim/minimal variants when possible.
+
+## Layers and Commands
+- Group related operations in logical layers.
+- Order instructions to maximize cache hits (dependencies before app code).
+- Clean up temporary files and package manager caches in the same layer.
+
+## User and Security
+- Do not run as root unless strictly necessary.
+- Create a non-root user for app execution.
+- Avoid embedding secrets, credentials, or SSH keys.
+
+## Dependencies
+- Install only what is required; avoid bloated images.
+- Pin dependency versions for reproducibility.
+- Remove build tools if not needed at runtime (multi-stage builds preferred).
+
+## Performance
+- Use multi-stage builds to separate build-time and runtime concerns.
+- Minimize image size by copying only required artifacts.
+- Leverage `.dockerignore` to avoid unnecessary context.
+
+## Environment and Config
+- Use ENV for config defaults, not secrets.
+- Document exposed ports and entrypoints.
+- Ensure container starts with a clear `CMD` or `ENTRYPOINT`.
+
+## Anti-Patterns
+- Floating versions (`latest`) for images or packages.
+- Long RUN chains with hard-to-maintain scripts.
+- Root execution without reason.
+- Storing secrets in ENV or image layers.
