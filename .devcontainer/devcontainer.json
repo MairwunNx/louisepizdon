@@ -1,0 +1,50 @@
+{
+  "name": "louisepizdon-dev",
+  "dockerComposeFile": [
+    "../docker-compose.dev.yaml"
+  ],
+  "service": "louisepizdon",
+  "workspaceFolder": "/workspace",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/docker-from-docker:1": {},
+    "ghcr.io/devcontainers/features/dotnet:2": {
+      "version": "9.0"
+    }
+  },
+  "forwardPorts": [
+    6379
+  ],
+  "portsAttributes": {
+    "6379": {
+      "label": "Redis",
+      "onAutoForward": "notify"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "ms-azuretools.vscode-docker",
+        "editorconfig.editorconfig",
+        "k--kato.intellij-idea-keybindings",
+        "redis.redis-for-vscode"
+      ],
+      "settings": {
+        "dotnet.defaultSolution": "Louisepizdon.sln",
+        "omnisharp.enableEditorConfigSupport": true,
+        "omnisharp.enableRoslynAnalyzers": true,
+        "files.eol": "\n"
+      }
+    }
+  },
+  "postCreateCommand": "cd Louisepizdon && dotnet restore",
+  "postStartCommand": "dotnet --version",
+  "runServices": [
+    "louisepizdon-redis",
+    "louisepizdon"
+  ],
+  "shutdownAction": "stopCompose"
+}
