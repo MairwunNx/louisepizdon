@@ -1,0 +1,53 @@
+---
+globs: *.sql,migrations/*.sql
+---
+
+# SQL Files (.sql) Rules 🗃️
+
+## Migration Principles
+- Migrations should be **idempotent** (safe to re-run).
+- Always use **transactions** for complex changes to ensure atomicity.
+- Follow a **forward-only** approach — no destructive rollbacks in production.
+- Each migration must be **small and focused** (one logical change per file).
+
+## Naming Conventions
+
+### Migration Files
+- Format: `V{version}__{description}.sql`
+- Examples:  
+  - `V1__initial_schema.sql`  
+  - `V2__add_soft_delete.sql`  
+  - `V14__create_usage_table.sql`  
+
+### Database Objects
+- **Tables**: `snake_case`, with optional project prefix if needed (e.g., `users`, `messages`).  
+- **Columns**: `snake_case` (e.g., `user_id`, `created_at`, `is_active`).  
+- **Indexes**: `idx_{table}_{columns}` (e.g., `idx_users_email`).  
+- **Constraints**: `fk_{table}_{column}` for foreign keys, `chk_{table}_{column}` for check constraints.  
+- **Sequences**: `seq_{table}_{column}`.  
+
+## SQL Style
+
+### Formatting
+- SQL keywords in **UPPERCASE**.
+- Object names in **lowercase**.
+- Consistent indentation for readability.
+- For complex queries: one clause per line (`SELECT`, `FROM`, `WHERE`, `JOIN`, etc.).
+
+### General Practices
+- Explicitly list columns in `INSERT` and `SELECT` (avoid `SELECT *`).
+- Use clear, descriptive constraint names.
+- Prefer explicit `JOIN` syntax over implicit joins.
+
+## Performance
+
+### Indexing
+- Add indexes for frequently used `WHERE` conditions.
+- Use composite indexes when queries filter by multiple columns.
+- Consider partial or filtered indexes for queries with selective conditions.
+- Drop unused or redundant indexes to avoid overhead.
+
+### Query Design
+- Analyze queries with `EXPLAIN` before production rollout.
+- Avoid N+1 queries; prefer joins or batching.
+- Ensure indexes support `ORDER BY` and `GROUP BY` clauses when needed.
