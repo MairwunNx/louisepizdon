@@ -1,0 +1,80 @@
+---
+globs: *.cs
+---
+
+# C# Files (.cs) Rules
+
+## Language Version & Features
+- Target **.NET 9.0+** (or latest LTS release).
+- Use modern C# features where appropriate:
+  - Nullable reference types for null safety.
+  - Record types for immutable data models.
+  - Pattern matching for concise conditional logic.
+  - Top-level statements for minimal boilerplate.
+  - File-scoped namespaces for reduced nesting.
+  - Init-only properties and records.
+  - Global using directives.
+  - Task-based async/await patterns.
+
+## Code Style
+- Use **spaces** for indentation (2 spaces per level).
+- Always follow `.editorconfig` conventions.
+- Naming conventions:
+  - **Public members**: PascalCase.
+  - **Private fields**: _camelCase with underscore prefix.
+  - **Local variables**: camelCase.
+  - **Constants**: PascalCase.
+  - **Interfaces**: IPascalCase (prefix with 'I').
+  - **Async methods**: Suffix with 'Async'.
+- Use implicit typing (`var`) when the type is obvious from the right side.
+
+## Project Organization
+- Organize code by feature/domain, not by technical layer.
+- Keep namespaces aligned with folder structure.
+- Use file-scoped namespaces to reduce nesting.
+- One class per file (exceptions for small nested types).
+
+## Error Handling
+- Always handle exceptions explicitly.
+- Use specific exception types, avoid catching `Exception` unless necessary.
+- Log exceptions with context before re-throwing or handling.
+- Prefer returning `Result<T>` pattern or nullable types over throwing exceptions for expected failures.
+
+## Logging
+- Use **Microsoft.Extensions.Logging** with structured logging.
+- Always include relevant context (IDs, keys, parameters).
+- Apply proper levels: Trace, Debug, Information, Warning, Error, Critical.
+- Use log message templates with named placeholders: `_logger.LogInformation("Processing {UserId}", userId);`
+
+## Asynchronous Programming
+- Use `async`/`await` consistently for I/O-bound operations.
+- Never use `.Result` or `.Wait()` - prefer `await`.
+- Use `CancellationToken` for cancellable operations.
+- Configure `ConfigureAwait(false)` for library code.
+- Return `Task` or `Task<T>` for async methods.
+
+## Dependency Injection
+- Use constructor injection for required dependencies.
+- Register services with proper lifetime (Singleton, Scoped, Transient).
+- Prefer interfaces for abstraction.
+- Use `IOptions<T>` pattern for configuration.
+
+## Best Practices
+- Prefer **composition over inheritance**.
+- Use **interfaces** to define contracts and enable testability.
+- Keep methods small and focused on single responsibility.
+- Use early returns to reduce nesting.
+- Avoid static state; prefer dependency injection.
+- Use nullable reference types and handle null cases explicitly.
+
+## Database / External Resources
+- Encapsulate data access behind repository or service interfaces.
+- Use `using` statements or `await using` for proper resource disposal.
+- Apply transactions for multi-step operations requiring consistency.
+- Always use parameterized queries to prevent SQL injection.
+
+## Testing
+- Write unit tests for business logic.
+- Use mocking frameworks (e.g., Moq, NSubstitute) for dependencies.
+- Follow AAA pattern: Arrange, Act, Assert.
+- Test edge cases and error scenarios.
