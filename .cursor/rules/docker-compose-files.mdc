@@ -1,0 +1,47 @@
+---
+globs: docker-compose*.yaml,docker-compose*.yml
+---
+
+# Docker Compose Rules
+
+## Core Principles
+- Compose files should be simple, readable, and environment-agnostic.
+- Prioritize security, reproducibility, and maintainability.
+- Keep production, development, and testing configs separated or layered.
+
+## Services
+- Define one service per responsibility (app, db, cache, etc.).
+- Use official/trusted images pinned to versions or digests (avoid "latest").
+- Avoid embedding secrets or credentials directly in compose files.
+
+## Volumes and Mounts
+- Mount only necessary paths; avoid mounting sensitive host directories.
+- Use named volumes for persistent data; keep ephemeral data in tmpfs.
+- Be explicit with read-only mounts when possible.
+
+## Networks
+- Use custom networks instead of default.
+- Assign clear service names as hostnames for communication.
+- Restrict service exposure with `expose` vs `ports` (map ports only when required externally).
+
+## Environment and Config
+- Store secrets in `.env` or external secret managers, never in the compose file.
+- Use environment variables for configuration defaults, not credentials.
+- Document expected variables in `.env.draft`.
+
+## Resource Management
+- Define resource limits (`cpus`, `mem_limit`) to avoid host overload.
+- Use healthchecks to ensure service readiness.
+- Set restart policies (`always`, `unless-stopped`, `on-failure`) appropriately.
+
+## Development vs Production
+- Use `docker-compose.dev.yml` for local development customizations. (dev containers)
+- Keep production (docker-compose.yml) files minimal and secure (no debug mounts, logs in volumes).
+- Separate build contexts for dev and production when needed.
+
+## Anti-Patterns
+- Using `latest` image tags.
+- Embedding credentials or secrets inline.
+- Mapping privileged host devices unnecessarily.
+- Relying on default network and service naming.
+- Excessive volume mounts to the host filesystem.
