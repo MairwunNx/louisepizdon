@@ -15,7 +15,7 @@ RUN : "${APP_VERSION:=$(cat ./.version 2>/dev/null || echo 0.0.0)}" && \
       -p:Version=${APP_VERSION} \
       -p:InformationalVersion="${APP_VERSION}+${BUILD_TIME}"
 
-FROM mcr.microsoft.com/dotnet/runtime:9.0-alpine
+FROM mcr.microsoft.com/dotnet/runtime:10.0-alpine
 WORKDIR /app
 RUN apk --no-cache add ca-certificates tzdata && \
     update-ca-certificates && \
