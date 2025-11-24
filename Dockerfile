@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS builder
+FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS builder
 WORKDIR /src
 COPY Louisepizdon/Louisepizdon.csproj ./Louisepizdon/
 RUN dotnet restore ./Louisepizdon/Louisepizdon.csproj
